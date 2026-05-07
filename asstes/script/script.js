@@ -9,9 +9,14 @@ const monedaSeleccion = document.querySelector("#seleccion")
 
 /*FUNCIONES*/
 async function getData () {
-    const res = await fetch(apiURL)
-    const datos = await res.json();
-    return datos
+    try{
+        const res = await fetch(apiURL)
+        const datos = await res.json();
+        return datos;}
+
+        catch (e){
+            alert("¡Algo salió mal! No se obtuvieron datos desde la API");
+        }
     
 }
 
@@ -26,20 +31,21 @@ btnConvertir.addEventListener("click" ,async () =>{
         valorDolar = data.dolar.valor;
         resultado = valorIngresado.value / valorDolar
         resultadoFinal = Number(resultado).toFixed(2)
-        valorResultado.innerHTML = resultadoFinal + " Dólares"
+        valorResultado.innerHTML = "$ " + resultadoFinal 
     }
+
+    else if(valorIngresado.value == 0){
+        alert("Ingrese un valor en CLP mayor a 0")
+    }
+    
      else{
         const data = await getData()
         valorEuro = data.euro.valor;
         resultado = valorIngresado.value / valorEuro
         resultadoFinal = Number(resultado).toFixed(2)
-        valorResultado.innerHTML = resultadoFinal + " Euros"
+        valorResultado.innerHTML = "€ " + resultadoFinal 
 
 
      }
-    
-    
-    
-})
-
+    })
 
